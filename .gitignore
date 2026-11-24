@@ -1,0 +1,22 @@
+# Environment and third-party tools (mkgmap is downloaded separately, see README)
+.venv/
+__pycache__/
+*.pyc
+tools/
+.DS_Store
+
+# Data from the watch and backups: official maps and device settings
+from-watch*/
+z-hodinek*/
+backups/
+zepp-contours/
+zkouska-zapisu*/
+vypis-map.txt
+
+# Built tiles and downloaded routes; they can be made again at any time
+build/
+data/
+vzornik*/
+swatch*/
+prekryv/
+test-*/
