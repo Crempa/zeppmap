@@ -171,7 +171,13 @@ class ZeppSession:
     async def send(self, endpoint: int, payload: bytes, encrypt: Optional[bool] = None) -> None:
         if encrypt is None:
             encrypt = self.services.get(endpoint, True)
-        log.debug("-> %04x %s%s", endpoint, payload.hex(), " (encrypted)" if encrypt else "")
+        if endpoint == ENDPOINT_WIFI and payload[:1] == bytes([_WIFI_HOTSPOT_START]):
+            log.debug(
+                "-> %04x (%d B, hotspot credentials hidden)%s",
+                endpoint, len(payload), " (encrypted)" if encrypt else "",
+            )
+        else:
+            log.debug("-> %04x %s%s", endpoint, payload.hex(), " (encrypted)" if encrypt else "")
         async with self._write_lock:
             for packet in self._encoder.encode(endpoint, payload, encrypt):
                 await self._write_packet(packet)

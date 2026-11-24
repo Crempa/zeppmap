@@ -78,7 +78,7 @@ class FakeWatch:
             if payload[:1] == b"\x11":
                 ssid, password, client, _rest = payload[1:].split(b"\x00", 3)
                 self.hotspot = (ssid.decode(), password.decode(), client.decode())
-                self._reply(0x0003, bytes([0x13, 0x01]), True)  # mezistav
+                self._reply(0x0003, bytes([0x13, 0x01]), True)  # intermediate state
                 self._reply(0x0003, bytes([0x13, 0x02]), True)
             elif payload[:1] == b"\x12":
                 self.hotspot = None

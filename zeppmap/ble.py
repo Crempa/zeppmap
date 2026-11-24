@@ -176,7 +176,7 @@ class BleLink:
         self._ack_with_response = "write-without-response" not in read_char.properties
         log.debug(
             "write: %s, read: %s, mtu %s",
-            write_char.properties, read_char.properties, self._client.mtu_size,
+            write_char.properties, read_char.properties, getattr(self._client, "mtu_size", "?"),
         )
         await self._client.start_notify(read_char, self._notified)
         self.connected = True

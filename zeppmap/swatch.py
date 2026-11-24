@@ -30,6 +30,7 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 import zipfile
 from collections import Counter, defaultdict
@@ -679,7 +680,12 @@ def legend(page: Optional[Page] = None) -> str:
 # -------------------------------------------------------------- compiling
 
 def find_java() -> str:
-    candidates = [os.environ.get("ZEPPMAP_JAVA"), "/opt/homebrew/opt/openjdk/bin/java", shutil.which("java")]
+    candidates = [
+        os.environ.get("ZEPPMAP_JAVA"),
+        "/opt/homebrew/opt/openjdk/bin/java",
+        "/usr/local/opt/openjdk/bin/java",
+        shutil.which("java"),
+    ]
     for candidate in candidates:
         if not candidate or not os.path.exists(candidate):
             continue
@@ -687,7 +693,8 @@ def find_java() -> str:
         probe = subprocess.run([candidate, "-version"], capture_output=True, text=True)
         if probe.returncode == 0:
             return candidate
-    raise SwatchError("Java is not installed (brew install openjdk), or point ZEPPMAP_JAVA to it")
+    hint = " (brew install openjdk)" if sys.platform == "darwin" else ""
+    raise SwatchError("Java is not installed%s, or point ZEPPMAP_JAVA to it" % hint)
 
 
 def find_mkgmap() -> str:

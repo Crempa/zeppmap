@@ -207,12 +207,13 @@ async def cmd_check(args) -> int:
         report(True, "Wi-Fi", "joins the watch hotspot with %s" % tool)
     elif tool:
         note("Wi-Fi", "%s not found; add --manual-wifi and join the watch hotspot yourself" % tool)
+    pip_python = r".venv\Scripts\python" if system == "windows" else ".venv/bin/python"
     for module in ("bleak", "cryptography"):
         try:
             __import__(module)
             report(True, module, "installed")
         except ImportError:
-            report(False, module, "missing; run: python3 -m pip install -r requirements.txt")
+            report(False, module, "missing; run: %s -m pip install -r requirements.txt" % pip_python)
     try:
         report(True, "Java", swatch.find_java())
     except ZeppmapError as exc:

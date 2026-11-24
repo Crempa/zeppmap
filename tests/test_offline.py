@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """Tests without a watch: .venv/bin/python -m unittest discover -s tests -v"""
 from __future__ import annotations
 
@@ -221,6 +222,18 @@ class SessionTest(unittest.IsolatedAsyncioTestCase):
         self.assertIn("content hidden", text)
         self.assertIn("<- 0003 1300", text)            # our own services are still logged
         self.assertNotIn(0x0001, session._queues)       # and foreign messages are not even kept
+
+    async def test_hotspot_password_is_not_logged(self):
+        session, _watch = make_pair()
+        await session.authenticate(timeout=5)
+        await session.request_services(timeout=5)
+        password = "SecretHotspot99"
+        with self.assertLogs("zeppmap.session", level="DEBUG") as captured:
+            await session.start_hotspot("ZM-0001", password, timeout=5)
+        text = "\n".join(captured.output)
+        self.assertNotIn(password, text)
+        self.assertNotIn(password.encode("utf-8").hex(), text)
+        self.assertIn("hotspot credentials hidden", text)
 
     def test_key_parsing(self):
         self.assertEqual(parse_auth_key(" 0x" + KEY.hex() + "\n"), KEY)
@@ -613,6 +626,17 @@ class SwatchTest(unittest.TestCase):
         units = (1 << 24) / 360.0
         self.assertEqual([round(value * units) for value in contours.bounds],
                          [round(value * units) for value in swatch.tile_bounds(x, y)])
+
+    def test_find_java_checks_intel_homebrew(self):
+        intel_java = "/usr/local/opt/openjdk/bin/java"
+        ok = subprocess.CompletedProcess([intel_java, "-version"], 0, "", "")
+        with mock.patch.dict(os.environ, {}, clear=False):
+            os.environ.pop("ZEPPMAP_JAVA", None)
+            with mock.patch.object(os.path, "exists", side_effect=lambda path: path == intel_java):
+                with mock.patch.object(shutil, "which", return_value=None):
+                    with mock.patch.object(subprocess, "run", return_value=ok) as run:
+                        self.assertEqual(swatch.find_java(), intel_java)
+        run.assert_called_once()
 
 
 def _relation(tags, *members):

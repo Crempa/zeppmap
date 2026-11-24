@@ -15,7 +15,7 @@ Turistické značky, cyklotrasy a lanovky v offline mapě hodinek Amazfit se Zep
 - **Značky jsou vidět při každé aktivitě**, na měřítkách od 8 m do 1,5 km. Vypínají se v hodinkách přepínačem vrstevnic.
 - **Oficiální mapa zůstává.** Základní mapa i vrstevnice Zeppu jsou dál vidět; původní dlaždice si nástroj ukládá a umí je kdykoli vrátit.
 - **Data jsou z [OpenStreetMap](https://www.openstreetmap.org)**, zdarma a bez registrace. Obnoví se jedním příkazem.
-- **Bez telefonu a bez Gadgetbridge:** vše jde z Macu přes Bluetooth a Wi‑Fi hotspot hodinek.
+- **Bez telefonu a bez Gadgetbridge:** vše jde z počítače přes Bluetooth a Wi‑Fi hotspot hodinek.
 
 ## Jak to funguje
 
@@ -71,7 +71,7 @@ brew install openjdk
 A [mkgmap](https://www.mkgmap.org.uk), který kreslí mapové dlaždice:
 
 ```bash
-mkdir -p tools && curl -L -o tools/mkgmap.zip https://www.mkgmap.org.uk/download/mkgmap-r4924.zip && unzip -q tools/mkgmap.zip -d tools && rm tools/mkgmap.zip
+mkdir -p tools && curl -fL -o tools/mkgmap.zip https://www.mkgmap.org.uk/download/mkgmap-r4924.zip && unzip -q tools/mkgmap.zip -d tools && rm tools/mkgmap.zip
 ```
 
 **3. Získejte auth klíč.** Hodinky přijímají příkazy jen se svým tajným klíčem, který zná aplikace Zepp. Vytáhne ho z vašeho účtu Zepp skript [huami-token](https://codeberg.org/argrento/huami-token); postupujte podle jeho návodu. Ve výpisu najdete u svých hodinek položku *auth key* (32 znaků). Zkopírujte ji a uložte:
@@ -98,7 +98,7 @@ Při prvním spuštění se macOS zeptá na povolení Bluetooth pro Terminál; p
 
 Když vypíše „Authenticated“ a u položek Wi‑Fi hotspot, FTP server a maps „yes“, spojení funguje.
 
-**6. Nahrajte značky.** Nejdřív nanečisto: stáhne trasy, sestaví dlaždice a vypíše, co by nahrál, ale do hodinek nic nezapíše.
+**6. Nahrajte značky.** Nejdřív nanečisto: přečte z hodinek původní vrstevnice, stáhne trasy, sestaví dlaždice a vypíše, co by nahrál, ale do hodinek nic nezapíše. Pro velkou oblast tak už tento krok zabere většinu času prvního běhu (u celého Česka kolem hodiny); následující ostrý `sync` pak už jen nahraje hotové dlaždice.
 
 ```bash
 caffeinate -i .venv/bin/python -m zeppmap sync --dry-run

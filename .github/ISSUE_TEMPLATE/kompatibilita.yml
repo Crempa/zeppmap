@@ -1,0 +1,72 @@
+name: Kompatibilita hodinek nebo systému
+description: Dejte vědět, zda zeppmap fungoval na vašem modelu hodinek Amazfit nebo na Windows / Linuxu.
+title: "[Kompatibilita] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Díky za zprávu! Pomůže dalším uživatelům zjistit, na čem nástroj funguje.
+        **Nikdy sem nevkládejte svůj auth klíč (`~/.zeppmap-key`) ani heslo k účtu Zepp.**
+
+  - type: input
+    id: watch
+    attributes:
+      label: Model hodinek Amazfit
+      placeholder: např. Amazfit Balance 2, T-Rex 3, Active 2…
+    validations:
+      required: true
+
+  - type: input
+    id: firmware
+    attributes:
+      label: Verze Zepp OS / firmwaru (volitelné)
+      placeholder: např. Zepp OS 4.5 / firmware 3.x
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operační systém počítače
+      options:
+        - macOS (Apple Silicon)
+        - macOS (Intel)
+        - Linux
+        - Windows
+    validations:
+      required: true
+
+  - type: input
+    id: os-detail
+    attributes:
+      label: Přesná verze systému a Pythonu
+      placeholder: např. Windows 11, Ubuntu 24.04 (NetworkManager), macOS 15, Python 3.12
+
+  - type: dropdown
+    id: wifi
+    attributes:
+      label: Připojení k Wi-Fi hotspotu hodinek
+      options:
+        - Automaticky (bez --manual-wifi)
+        - Ručně přes --manual-wifi (automatické selhalo)
+        - Zkoušel jsem jen příkaz services (bez Wi-Fi)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: result
+    attributes:
+      label: Výsledek
+      options:
+        - Funguje bez potíží
+        - Funguje částečně / s omezením
+        - Nefunguje
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Podrobnosti
+      description: Co fungovalo, co ne, jak se zobrazují značky při aktivitě, případně chybová hláška (bez auth klíče).
+      placeholder: Např. výpis příkazu services, chování při sync, viditelnost značek a vrstevnic…
+    validations:
+      required: true

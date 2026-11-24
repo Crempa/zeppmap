@@ -2,7 +2,9 @@
 .venv/
 __pycache__/
 *.pyc
+*.part
 tools/
+.claude/
 .DS_Store
 
 # Data from the watch and backups: official maps and device settings

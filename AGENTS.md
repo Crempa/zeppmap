@@ -28,7 +28,7 @@ brew install openjdk
 ```
 
 ```bash
-mkdir -p tools && curl -L -o tools/mkgmap.zip https://www.mkgmap.org.uk/download/mkgmap-r4924.zip && unzip -q tools/mkgmap.zip -d tools && rm tools/mkgmap.zip
+mkdir -p tools && curl -fL -o tools/mkgmap.zip https://www.mkgmap.org.uk/download/mkgmap-r4924.zip && unzip -q tools/mkgmap.zip -d tools && rm tools/mkgmap.zip
 ```
 
 If `git` or `python3` is missing, macOS offers the developer tools when you run them; the user has to confirm that dialog. Homebrew installation also needs the user (it asks for their password).
