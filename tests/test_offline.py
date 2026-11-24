@@ -38,6 +38,9 @@ except ImportError:  # the FTP tests are skipped then
     FTPServer = None
 
 KEY = bytes(range(0x10, 0x20))
+# macOS alone keeps the watch connected at the system level and has CoreBluetooth;
+# the tests of that behaviour check the opposite elsewhere.
+ON_MACOS = sys.platform == "darwin"
 
 
 def _openssl_with_b163():
@@ -276,6 +279,7 @@ class BluetoothStateTest(unittest.TestCase):
                 self._run(states)
             self.assertIn(expected, str(caught.exception))
 
+    @unittest.skipUnless(ON_MACOS, "CoreBluetooth exists only on macOS")
     def test_matches_corebluetooth(self):
         import CoreBluetooth
 
@@ -348,6 +352,12 @@ class FindWatchTest(unittest.IsolatedAsyncioTestCase):
         self.ble.connected_watches = lambda name=None: [
             d for d in (other, watch) if not name or name.lower() in d.name.lower()
         ]
+        if not ON_MACOS:
+            # elsewhere the system does not hold the watch, so the tool scans
+            with self.assertRaises(self.ble.LinkError):
+                await self.ble.find_watch(None, None, 5)
+            self.assertEqual(self.scans, [("filter", 5)])
+            return
         self.assertIs(await self.ble.find_watch(None, None, 5), other)
         self.assertIs(await self.ble.find_watch("balance", None, 5), watch)
         self.assertIs(await self.ble.find_watch(None, "d079f294", 5), watch)
@@ -2274,7 +2284,10 @@ class CliFlowTest(unittest.IsolatedAsyncioTestCase):
         self.still_connected = [argparse.Namespace(name="Balance 3", address="test")]
         code, output = await self._run("services")
         self.assertEqual(code, 0, output)
-        self.assertIn("stays connected to this Mac", output)
+        if ON_MACOS:
+            self.assertIn("stays connected to this Mac", output)
+        else:
+            self.assertNotIn("stays connected", output)   # only macOS holds the watch
 
         self.still_connected = []
         code, output = await self._run("services")
@@ -2628,8 +2641,9 @@ class CliFlowTest(unittest.IsolatedAsyncioTestCase):
         code, output = await self._run("sync", "--out", os.path.join(self.tmp, "z"), "--cache", os.path.join(self.tmp, "c"))
         self.assertEqual(code, 0, output)
         self.assertIn("up to date", output)                    # no route in the tile
-        self.assertEqual(output.count("stays connected"), 1)
-        self.assertTrue(output.rstrip().endswith("on the Mac again."))   # the notice comes last
+        self.assertEqual(output.count("stays connected"), 1 if ON_MACOS else 0)
+        if ON_MACOS:
+            self.assertTrue(output.rstrip().endswith("on the Mac again."))   # the notice comes last
 
 
 if __name__ == "__main__":
