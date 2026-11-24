@@ -6,11 +6,9 @@ Turistické značky, cyklotrasy a lanovky v offline mapě hodinek Amazfit se Zep
 > **Neoficiální nástroj, používáte ho na vlastní riziko.** zeppmap nijak nesouvisí se společností Zepp Health ani se značkou Amazfit. Zapisuje do souborů v hodinkách; přepisované soubory si sice zálohuje a každou nahranou dlaždici kontroluje, autor ale neručí za žádné škody na hodinkách, datech ani čemkoli jiném. Software je poskytován tak, jak je, bez jakékoli záruky (viz [licence](LICENSE)).
 
 <p align="center">
-  <img src="docs/img/hodinky-200m.jpg" width="32%" alt="Pardubice při měřítku 200 m: červené a zelené turistické značky a cyklotrasy s čísly kolem zámku">
-  <img src="docs/img/hodinky-25m.jpg" width="32%" alt="Detail při měřítku 25 m: cyklotrasa 2 a naučná stezka kopírují cesty v parku">
-  <img src="docs/img/hodinky-8m.jpg" width="32%" alt="Největší přiblížení 8 m: cyklotrasa vede přesně po cestě">
+  <img src="docs/img/hodinky.webp" width="420" alt="Hodinky Amazfit Balance 3 Ti s mapou Krkonoš u Černého Dolu: turistické značky, cyklotrasy a vrstevnice při měřítku 500 m">
 </p>
-<p align="center"><sub>Amazfit Balance 3 Ti, Pardubice: měřítko 200 m, 25 m a 8 m</sub></p>
+<p align="center"><sub>Amazfit Balance 3 Ti, Černý Důl v Krkonoších, měřítko 500 m</sub></p>
 
 ## Co to dělá
 
