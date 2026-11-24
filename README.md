@@ -2,6 +2,9 @@
 
 Turistické značky, cyklotrasy a lanovky v offline mapě hodinek Amazfit se Zepp OS.
 
+> [!WARNING]
+> **Neoficiální nástroj, používáte ho na vlastní riziko.** zeppmap nijak nesouvisí se společností Zepp Health ani se značkou Amazfit. Zapisuje do souborů v hodinkách; přepisované soubory si sice zálohuje a každou nahranou dlaždici kontroluje, autor ale neručí za žádné škody na hodinkách, datech ani čemkoli jiném. Software je poskytován tak, jak je, bez jakékoli záruky (viz [licence](LICENSE)).
+
 <p align="center">
   <img src="docs/img/hodinky-200m.jpg" width="32%" alt="Pardubice při měřítku 200 m: červené a zelené turistické značky a cyklotrasy s čísly kolem zámku">
   <img src="docs/img/hodinky-25m.jpg" width="32%" alt="Detail při měřítku 25 m: cyklotrasa 2 a naučná stezka kopírují cesty v parku">
@@ -147,7 +150,7 @@ Když někde značka chybí nebo vede jinudy, je to v datech OpenStreetMap. Dá 
 
 ## Důležité vědět
 
-- **Neoficiální nástroj.** zeppmap nijak nesouvisí se společností Zepp Health ani se značkou Amazfit. Zapisuje do souborů v hodinkách; před každým přepsáním si je zálohuje a každou nahranou dlaždici kontroluje, přesto ho používáte na vlastní riziko.
+- **Vlastní riziko.** Nástroj je neoficiální a autor za nic neručí (viz upozornění na začátku). Před každým přepsáním si soubory v hodinkách zálohuje a každou nahranou dlaždici kontroluje.
 - **Jedno spojení.** Hodinky se nemohou současně bavit s telefonem a s Macem. Během práce nástroje musí být Bluetooth na telefonu vypnutý.
 - **Aktualizace map** v aplikaci Zepp může dlaždice se značkami přepsat. Stačí pak znovu pustit `sync`.
 - **Lyžařská vrstva** se značkami nesouvisí. Pokud jste dřív používali `sync --layer ski`, nechte ji vypnutou, jinak se značky nakreslí dvakrát.
